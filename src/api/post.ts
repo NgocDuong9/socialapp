@@ -5,40 +5,28 @@ export const postNew = async (data: {
   desc: string;
   img?: string;
 }) => {
-  try {
-    const post = await axios.post("http://localhost:8800/api/post", {
-      ...data,
-    });
+  const post = await axios.post(`${process.env.REACT_APP_PUBLIC_URL}/post`, {
+    ...data,
+  });
 
-    return post.data;
-  } catch (error) {
-    throw new Error();
-  }
+  return post.data;
 };
 
 export const getAllPost = async (data: { userId: string }) => {
-  try {
-    const allPost = await axios.get(
-      `http://localhost:8800/api/post/timeline/all/${data.userId}`
-    );
+  const allPost = await axios.get(
+    `${process.env.REACT_APP_PUBLIC_URL}/post/timeline/all/${data.userId}`
+  );
 
-    return allPost.data;
-  } catch (error) {
-    throw new Error();
-  }
+  return allPost.data;
 };
 
 export const likePost = async (data: { id: string; userId: string }) => {
-  try {
-    const allPost = await axios.put(
-      `http://localhost:8800/api/post/like/${data.id}`,
-      {
-        userId: data.userId,
-      }
-    );
+  const allPost = await axios.put(
+    `${process.env.REACT_APP_PUBLIC_URL}/post/like/${data.id}`,
+    {
+      userId: data.userId,
+    }
+  );
 
-    return allPost.data;
-  } catch (error) {
-    throw new Error();
-  }
+  return allPost.data;
 };

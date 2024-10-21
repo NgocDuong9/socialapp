@@ -4,6 +4,8 @@ interface User {
   _id: string;
   name: string;
   email: string;
+  followers: any;
+  followings: any;
 }
 
 interface UserContextType {

@@ -5,30 +5,23 @@ export const register = async (data: {
   email: string;
   password: string;
 }) => {
-  try {
-    const register = await axios.post(
-      "http://localhost:8800/api/auth/register",
-      {
-        ...data,
-      }
-    );
-    console.log(register);
+  const register = await axios.post(
+    `${process.env.REACT_APP_PUBLIC_URL}/auth/register`,
+    {
+      ...data,
+    }
+  );
+  console.log(register);
 
-    return register.data;
-  } catch (error) {
-    throw new Error();
-  }
+  return register.data;
 };
 
 export const login = async (data: { email: string; password: string }) => {
-  try {
-    const login = await axios.post("http://localhost:8800/api/auth/login", {
+  const login = await axios.post(
+    `${process.env.REACT_APP_PUBLIC_URL}/auth/login`,
+    {
       ...data,
-    });
-    console.log(login);
-
-    return login.data;
-  } catch (error) {
-    throw new Error();
-  }
+    }
+  );
+  return login.data;
 };

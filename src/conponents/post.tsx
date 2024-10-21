@@ -61,8 +61,6 @@ const Post = (postItem: PostInterface) => {
     } catch (error) {}
   };
 
-  console.log(process.env.REACT_APP_PUBLIC_FOLDER);
-
   return (
     <div className="w-full shadow-3xl p-3 flex flex-col gap-3 rounded-lg">
       <div className="flex gap-2 items-start  justify-between">

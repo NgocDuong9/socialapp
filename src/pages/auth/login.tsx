@@ -14,21 +14,20 @@ const Login = () => {
     const email = (form.elements.namedItem("email") as HTMLInputElement).value;
     const password = (form.elements.namedItem("password") as HTMLInputElement)
       .value;
-    console.log({ email, password }); // Logs the form values
 
     try {
       const data = await login({
         email,
         password,
       });
-      console.log(data);
+
       if (!data) return;
       setUser(data);
       localStorage.setItem("user", JSON.stringify(data));
       toast.success("Login success!");
       navigate("/");
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error?.response.data.message ?? "Somewent wrong");
     }
   };
 

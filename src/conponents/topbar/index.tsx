@@ -59,7 +59,7 @@ const TopBar = () => {
               src="/assets/person/1.jpeg"
               className="h-9 w-9 object-cover rounded-3xl cursor-pointer"
               onClick={() => {
-                navigate(`profile/${user?._id}`);
+                navigate(`/profile/${user?._id}`);
               }}
             />
             <p
