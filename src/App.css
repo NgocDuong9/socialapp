@@ -32,6 +32,10 @@
   width: 5px; /* Độ rộng của thanh cuộn */
 }
 
+.feed::-webkit-scrollbar {
+  width: 0px; /* Độ rộng của thanh cuộn */
+}
+
 .sidebar::-webkit-scrollbar-track {
   background-color: #f1f1f1; /* Màu nền của đường dẫn thanh cuộn */
 }

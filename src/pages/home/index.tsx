@@ -4,8 +4,11 @@ import Layout from "../../conponents/layout";
 import Sidebar from "../../conponents/sidebar";
 import Feed from "../../conponents/feed";
 import Rightbar from "../../conponents/rightbar";
+import { useUserData } from "../../hooks/useUserData";
 
 const Home = () => {
+  const { user } = useUserData();
+
   return (
     <Layout>
       <div className="flex">

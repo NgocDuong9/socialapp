@@ -4,8 +4,13 @@ import Layout from "../../conponents/layout";
 import Sidebar from "../../conponents/sidebar";
 import Feed from "../../conponents/feed";
 import Rightbar from "../../conponents/rightbar";
+import { useParams } from "react-router-dom";
 
 const Profile = () => {
+  const params = useParams();
+
+  console.log(params.id);
+
   return (
     <Layout>
       <div className="flex">
