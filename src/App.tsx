@@ -9,6 +9,7 @@ import Home from "./pages/home";
 import Profile from "./pages/profile";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import Message from "./pages/message";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/message" element={<Message />} />
           <Route path="/register" element={<Register />} />
         </Routes>
         <ToastContainer />

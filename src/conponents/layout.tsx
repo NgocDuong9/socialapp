@@ -1,9 +1,15 @@
 import { ReactNode } from "react";
 import TopBar from "./topbar";
 
-const Layout = ({ children }: { children: ReactNode }) => {
+const Layout = ({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) => {
   return (
-    <div>
+    <div className={`${className}`}>
       <TopBar />
       <div className="mt-[50px]">{children}</div>
     </div>
