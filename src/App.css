@@ -28,6 +28,23 @@
   color: #61dafb;
 }
 
+.sidebar::-webkit-scrollbar {
+  width: 5px; /* Độ rộng của thanh cuộn */
+}
+
+.feed::-webkit-scrollbar {
+  width: 0px; /* Độ rộng của thanh cuộn */
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Màu nền của đường dẫn thanh cuộn */
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: rgb(179, 179, 179); /* Màu của thanh cuộn */
+  border-radius: 10px; /* Bo tròn thanh cuộn */
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
