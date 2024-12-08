@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TopBar from "../../conponents/topbar";
 import Sidebar from "../../conponents/sidebar";
 import Rightbar from "../../conponents/rightbar";
@@ -7,6 +7,7 @@ import LeftMessage from "../../conponents/message/leftMessage";
 import BoxChat from "../../conponents/message/boxChat";
 import { useUserData } from "../../hooks/useUserData";
 import { getAllConversation, getMessageById } from "../../api/message";
+import { io, Socket } from "socket.io-client";
 
 interface Member {
   _id: string;
@@ -35,10 +36,44 @@ export interface Message {
 const Message = () => {
   const [conversation, setConversation] = useState<Conversation[]>([]);
   const [conversationSelect, setConversationSelect] = useState<Conversation>();
+  const { user } = useUserData();
 
   const [message, setMessage] = useState<Message[]>();
+  const [messageArrvial, setMessageArrvial] = useState<any>();
 
-  const { user } = useUserData();
+  const socket = useRef<any>();
+
+  useEffect(() => {
+    socket.current = io("http://localhost:8900");
+    socket?.current?.on("getMessage", (data: any) => {
+      console.log(data, "getttMesssafae");
+      setMessageArrvial({
+        text: data.text,
+        senderId: data.senderId,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log(messageArrvial);
+
+    if (
+      messageArrvial &&
+      conversationSelect?.members.find(
+        (item) => item._id === messageArrvial.senderId
+      )
+    ) {
+      setMessage((prev) => [...(prev ?? []), messageArrvial]);
+    }
+  }, [messageArrvial, conversationSelect]);
+
+  useEffect(() => {
+    socket?.current?.emit("addUser", user?._id);
+    socket?.current?.on("getUsers", (users: any) => {
+      // console.log(users);
+    });
+  }, [socket, user]);
 
   useEffect(() => {
     if (!user) return;
@@ -59,7 +94,6 @@ const Message = () => {
     const getMessage = async () => {
       try {
         const data = await getMessageById({ id: conversationSelect._id });
-        console.log(data);
         setMessage(data);
       } catch (error) {
         console.log(error, ">>>>>Message");

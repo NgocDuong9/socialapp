@@ -22,7 +22,6 @@ const Register = () => {
         email,
         password,
       });
-      console.log(data);
       if (!data) return;
       toast.success("Resister success!");
       navigate("/login");

@@ -3,6 +3,7 @@ import Mess from "./mess";
 import { Conversation, Message } from "../../pages/message";
 import { useUserData } from "../../hooks/useUserData";
 import { createMessage } from "../../api/message";
+import { io, Socket } from "socket.io-client";
 
 const BoxChat = ({
   message,
@@ -15,20 +16,41 @@ const BoxChat = ({
 }) => {
   const { user } = useUserData();
   const [text, setText] = useState("");
-  const scrollRef = useRef();
+  const socket = useRef<any>();
 
-  const createMessAge = async () => {
+  const scrollRef = useRef<any>();
+
+  useEffect(() => {
+    socket.current = io("http://localhost:8900");
+  }, []);
+
+  useEffect(() => {
+    scrollRef?.current?.scrollIntoView({ behavior: "smooth" });
+  }, [message]);
+
+  const handleSendMessage = async () => {
     if (!user) return;
+    const receiverId = conversationSelect?.members.find(
+      (member) => member._id !== user._id
+    )?._id;
+
+    socket.current.emit("sendMessage", {
+      senderId: user._id,
+      receiverId,
+      text: text.trim(),
+    });
+
     try {
-      const mess = await createMessage({
+      const message = await createMessage({
         conversationId: conversationSelect?._id ?? "",
         senderId: user._id,
-        text,
+        text: text.trim(),
       });
-      setMessage((prev) => [...(prev ?? []), mess]);
+
+      setMessage((prevMessages) => [...(prevMessages ?? []), message]);
       setText("");
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -47,7 +69,7 @@ const BoxChat = ({
         <div className="w-full overflow-y-auto py-5 min-h-[calc(100vh-170px)] max-h-[calc(100vh-170px)] sidebar px-2">
           {message?.map((item, idx) => {
             return (
-              <div key={idx}>
+              <div key={idx} ref={scrollRef}>
                 <Mess
                   message={item.text}
                   time={item.createdAt}
@@ -70,7 +92,7 @@ const BoxChat = ({
         </div>
         <button
           className="px-3 py-2 bg-[#277bea] text-white"
-          onClick={createMessAge}
+          onClick={handleSendMessage}
         >
           Send
         </button>

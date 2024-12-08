@@ -16,11 +16,13 @@ const Mess = ({
   const createdAt = dayjs(time);
 
   const timeAgo = createdAt.fromNow(); // "3 days ago" hoặc "2 hours ago"
+  console.log(img);
+
   return (
     <div className={twMerge("flex gap-2 flex-col w-full", own && "items-end")}>
       <div className="flex gap-1 items-center">
         <img
-          src={img ?? '"/assets/person/2.jpeg"'}
+          src={Boolean(img) ? img : "/assets/person/avatar.png"}
           alt=""
           className={twMerge(
             "w-10 h-10 rounded-full object-cover",
