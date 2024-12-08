@@ -10,7 +10,7 @@ const Mess = ({
 }: {
   message: string;
   time: string;
-  img: string;
+  img?: string;
   own?: boolean;
 }) => {
   const createdAt = dayjs(time);
@@ -20,7 +20,7 @@ const Mess = ({
     <div className={twMerge("flex gap-2 flex-col w-full", own && "items-end")}>
       <div className="flex gap-1 items-center">
         <img
-          src={img}
+          src={img ?? '"/assets/person/2.jpeg"'}
           alt=""
           className={twMerge(
             "w-10 h-10 rounded-full object-cover",

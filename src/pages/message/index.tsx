@@ -22,11 +22,21 @@ export interface Conversation {
   __v: number;
 }
 
+export interface Message {
+  _id: string;
+  conversationId: string;
+  senderId: string;
+  text: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
 const Message = () => {
   const [conversation, setConversation] = useState<Conversation[]>([]);
-  const [idSelect, setIdSelect] = useState<string>();
+  const [conversationSelect, setConversationSelect] = useState<Conversation>();
 
-  const [message, setMessage] = useState();
+  const [message, setMessage] = useState<Message[]>();
 
   const { user } = useUserData();
 
@@ -35,7 +45,7 @@ const Message = () => {
     const getConversation = async () => {
       try {
         const data = await getAllConversation({ userId: user._id });
-        setIdSelect(data?.[0]._id);
+        setConversationSelect(data?.[0]);
         setConversation(data);
       } catch (error) {
         console.log(error);
@@ -43,13 +53,12 @@ const Message = () => {
     };
     getConversation();
   }, [user]);
-  console.log(idSelect);
 
   useEffect(() => {
-    if (!idSelect) return;
+    if (!conversationSelect) return;
     const getMessage = async () => {
       try {
-        const data = await getMessageById({ id: idSelect });
+        const data = await getMessageById({ id: conversationSelect._id });
         console.log(data);
         setMessage(data);
       } catch (error) {
@@ -57,17 +66,24 @@ const Message = () => {
       }
     };
     getMessage();
-  }, [idSelect]);
+  }, [conversationSelect]);
 
   return (
     <Layout>
       <TopBar />
       <div className="flex ">
         <div className="flex-[2.5] p-5">
-          <LeftMessage conversation={conversation} setIdSelect={setIdSelect} />
+          <LeftMessage
+            conversation={conversation}
+            setConversationSelect={setConversationSelect}
+          />
         </div>
         <div className="flex-[5]">
-          <BoxChat />
+          <BoxChat
+            message={message}
+            conversationSelect={conversationSelect}
+            setMessage={setMessage}
+          />
         </div>
         <div className="flex-[3]">
           <Rightbar />

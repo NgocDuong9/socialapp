@@ -6,10 +6,12 @@ import { Conversation } from "../../pages/message";
 
 const LeftMessage = ({
   conversation,
-  setIdSelect,
+  setConversationSelect,
 }: {
   conversation: Conversation[];
-  setIdSelect: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setConversationSelect: React.Dispatch<
+    React.SetStateAction<Conversation | undefined>
+  >;
 }) => {
   const { user } = useUserData();
 
@@ -29,7 +31,7 @@ const LeftMessage = ({
           );
 
           return (
-            <div key={idx} onClick={() => setIdSelect(item._id)}>
+            <div key={idx} onClick={() => setConversationSelect(item)}>
               <SelectFriend
                 key={idx}
                 name={dataMember?.username ?? ""}

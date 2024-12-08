@@ -15,3 +15,15 @@ export const getMessageById = async (data: { id: string }) => {
 
   return all.data;
 };
+
+export const createMessage = async (data: {
+  senderId: string;
+  conversationId: string;
+  text: string;
+}) => {
+  const all = await axios.post(`${process.env.REACT_APP_PUBLIC_URL}/message`, {
+    ...data,
+  });
+
+  return all.data;
+};
